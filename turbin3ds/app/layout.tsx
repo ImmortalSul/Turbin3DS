@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ColorPresetProvider } from "@/components/color-preset-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { FloatingHeader } from "@/components/floating-header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +33,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 const themeKey = "turbin3ds-theme";
-                const theme = localStorage.getItem(themeKey) || "system";
+                const theme = localStorage.getItem(themeKey) || "light";
                 
                 if (theme === "dark" || 
                     (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
@@ -54,12 +53,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider defaultTheme="system" storageKey="turbin3ds-theme">
+        <ThemeProvider defaultTheme="light" storageKey="turbin3ds-theme">
           <ColorPresetProvider>
-            <TooltipProvider>
-              <FloatingHeader />
-              {children}
-            </TooltipProvider>
+            <TooltipProvider>{children}</TooltipProvider>
           </ColorPresetProvider>
         </ThemeProvider>
       </body>

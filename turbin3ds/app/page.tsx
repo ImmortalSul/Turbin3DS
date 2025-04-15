@@ -4,100 +4,63 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
   ArrowRight,
-  Layers,
-  Layout,
-  SlidersHorizontal,
-  Bell,
-  BarChart3,
-  Component,
-  Github,
+  Package,
+  Building,
+  ChevronRight,
+  Sparkles,
 } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-16">
       {/* Hero Section */}
-      <section className="py-16 px-6 md:px-8 flex flex-col items-center justify-center text-center">
+      <section className="py-20 px-6 md:px-8 flex flex-col items-center justify-center text-center bg-gradient-to-b from-background to-muted/30">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
               Turbin3DS
-            </span>{" "}
-            Design System
+            </span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            its a library thing
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            {/* <Button size="lg" className="gap-2">
-              <span>Explore Components</span>
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button size="lg" variant="outline" className="gap-2">
-              <Github className="h-4 w-4" />
-              <span>View on GitHub</span>
-            </Button> */}
+          {/* <p className="text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+            A comprehensive design system for building beautiful interfaces
+          </p> */}
+
+          <div className="inline-flex items-center gap-2 bg-muted/50 px-4 py-2 rounded-full text-sm mb-6">
+            <Sparkles className="h-4 w-4 text-primary" />
+            <span className="font-medium">Latest version: v1.0.0</span>
           </div>
         </div>
       </section>
 
-      {/* Components Section */}
-      <section className="py-16 px-8">
+      {/* Main Categories */}
+      <section className="py-12 px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Component Categories</h2>
-            {/* <p className="text-muted-foreground max-w-2xl mx-auto">
-              i forgot why i made this text box
-            </p> */}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <CategoryCard
-              icon={<SlidersHorizontal />}
-              title="Basic Inputs"
-              description="Buttons, inputs, selects, and other basic form controls"
-              href="/components/basic-inputs"
-              color="bg-blue-500/10 text-blue-500"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Core Components */}
+            <MainCategoryCard
+              icon={<Package className="w-12 h-12" />}
+              title="Core Components"
+              description="Foundational UI building blocks that form the basis of all interfaces in the design system"
+              href="/components/core"
+              color="bg-blue-500/10 text-blue-500 dark:bg-blue-900/20 dark:text-blue-400"
+              features={[
+                "Basic Inputs",
+                "Form Components",
+                "Data Display",
+                "Feature Components",
+                "Layout Components",
+                "Feedback Components",
+              ]}
             />
 
-            <CategoryCard
-              icon={<Component />}
-              title="Form Components"
-              description="Form layouts, validations, and specialized inputs"
-              href="/components/form-components"
-              color="bg-purple-500/10 text-purple-500"
-            />
-
-            <CategoryCard
-              icon={<BarChart3 />}
-              title="Data Display"
-              description="Cards, badges, avatars, and other data visualization components"
-              href="/components/data-display"
-              color="bg-emerald-500/10 text-emerald-500"
-            />
-
-            <CategoryCard
-              icon={<Layers />}
-              title="Feature Components"
-              description="Higher-level components used in the application"
-              href="/components/feature-components"
-              color="bg-amber-500/10 text-amber-500"
-            />
-
-            <CategoryCard
-              icon={<Layout />}
-              title="Layout Components"
-              description="Layout structuring components and patterns"
-              href="/components/layout"
-              color="bg-sky-500/10 text-sky-500"
-            />
-
-            <CategoryCard
-              icon={<Bell />}
-              title="Feedback Components"
-              description="Alerts, toasts, dialogs, and other feedback mechanisms"
-              href="/components/feedback"
-              color="bg-rose-500/10 text-rose-500"
+            {/* Vertical Components */}
+            <MainCategoryCard
+              icon={<Building className="w-12 h-12" />}
+              title="Vertical Components"
+              description="Specialized components designed for specific business domains and use cases"
+              href="/components/verticals"
+              color="bg-emerald-500/10 text-emerald-500 dark:bg-emerald-900/20 dark:text-emerald-400"
+              features={["Assignments", "Placements", "Applications"]}
             />
           </div>
         </div>
@@ -106,31 +69,59 @@ export default function Home() {
   );
 }
 
-function CategoryCard({
+function MainCategoryCard({
   icon,
   title,
   description,
   href,
   color,
+  features,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   href: string;
   color: string;
+  features: string[];
 }) {
   return (
-    <Link href={href} className="block group">
-      <div className="border rounded-lg p-6 hover:border-primary hover:shadow-md transition-all h-full flex flex-col bg-card">
-        <div className={`p-3 rounded-lg w-fit mb-4 ${color}`}>{icon}</div>
-        <h2 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-          {title}
-        </h2>
-        <p className="text-muted-foreground flex-grow">{description}</p>
-        <div className="mt-5 flex justify-between items-center">
-          <span className="text-sm font-medium">Explore</span>
-          <ArrowRight className="h-4 w-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+    <Link href={href} className="block">
+      <div className="border rounded-lg overflow-hidden transition-all hover:shadow-lg hover:border-primary bg-card group h-full relative">
+        {/* Top section with icon and title */}
+        <div className={`p-6 pb-4 border-b ${color}`}>
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-background/80 backdrop-blur rounded-lg">
+              {icon}
+            </div>
+            <h2 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+              {title}
+            </h2>
+          </div>
         </div>
+
+        {/* Content section */}
+        <div className="p-6">
+          <p className="text-muted-foreground mb-6">{description}</p>
+          <div className="space-y-2 mb-14">
+            {" "}
+            {/* Added more bottom margin to make room for the floating badge */}
+            {features.map((feature) => (
+              <div key={feature} className="flex items-center gap-2 text-sm">
+                <div className="w-1 h-1 rounded-full bg-primary"></div>
+                <span>{feature}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Floating button/badge at bottom-right */}
+          <div className="absolute bottom-6 right-6 bg-primary/10 dark:bg-primary/20 text-primary px-4 py-2 rounded-full flex items-center gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+            <span className="text-sm font-medium">Browse Components</span>
+            <ChevronRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+          </div>
+        </div>
+
+        {/* Overlay effect on hover */}
+        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity" />
       </div>
     </Link>
   );

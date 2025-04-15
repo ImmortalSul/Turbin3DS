@@ -54,7 +54,7 @@ export function FloatingHeader() {
         <div className="bg-background/90 backdrop-blur-md border-b shadow-sm">
           <div className="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Link href="/" legacyBehavior>
+              <Link href="/">
                 <Button variant="ghost" size="sm" className="text-sm gap-1.5">
                   <Home className="h-4 w-4" />
                   Turbin3DS
