@@ -66,8 +66,8 @@ export default function ApplicationReviewPage() {
           Application Review Components
         </h1>
         <p className="text-muted-foreground">
-          Components for reviewing applications, assigning cohorts, and managing
-          candidates
+          Components for reviewing Turbin3 web3 developer program applications,
+          assigning cohorts, and managing candidates
         </p>
       </div>
 
@@ -260,6 +260,10 @@ export default function ApplicationReviewPage() {
                   subject: "We need more information",
                 },
               ]}
+              selectedTemplateId={null}
+              onTemplateSelect={(templateId) =>
+                console.log("Selected Template:", templateId)
+              }
             />
           </div>
           <div className="mt-4 text-sm text-muted-foreground">
@@ -280,31 +284,55 @@ function CompleteApplicationReview() {
   >("pending");
   const [selectedCohort, setSelectedCohort] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([
-    "International",
-    "Scholarship",
+    "Web3 Experience",
+    "Frontend Developer",
   ]);
+  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
   const availableCohorts = [
     {
       id: "c1",
-      name: "Summer 2025",
+      name: "Summer 2025 - Web3 Builders",
       startDate: "June 1, 2025",
       seats: 30,
       remaining: 12,
     },
     {
       id: "c2",
-      name: "Fall 2025",
+      name: "Fall 2025 - dApp Developers",
       startDate: "September 15, 2025",
       seats: 45,
       remaining: 45,
     },
     {
       id: "c3",
-      name: "Winter 2026",
+      name: "Winter 2026 - Blockchain Engineers",
       startDate: "January 10, 2026",
       seats: 25,
       remaining: 25,
+    },
+  ];
+
+  const responseTemplates = [
+    {
+      id: "t1",
+      name: "Acceptance",
+      subject: "Welcome to Turbin3 Web3 Developer Program",
+    },
+    {
+      id: "t2",
+      name: "Deferral",
+      subject: "Update on your Turbin3 application",
+    },
+    {
+      id: "t3",
+      name: "Rejection",
+      subject: "Regarding your Turbin3 program application",
+    },
+    {
+      id: "t4",
+      name: "Additional Information",
+      subject: "We need more information for your Turbin3 application",
     },
   ];
 
@@ -312,6 +340,21 @@ function CompleteApplicationReview() {
     newStatus: "pending" | "approved" | "deferred" | "rejected"
   ) => {
     setStatus(newStatus);
+
+    // Auto-select appropriate response template based on decision
+    switch (newStatus) {
+      case "approved":
+        setSelectedTemplate("t1"); // Acceptance template
+        break;
+      case "deferred":
+        setSelectedTemplate("t2"); // Deferral template
+        break;
+      case "rejected":
+        setSelectedTemplate("t3"); // Rejection template
+        break;
+      default:
+        setSelectedTemplate(null);
+    }
 
     // Auto-open cohort selection if approved
     if (newStatus === "approved" && !selectedCohort) {
@@ -491,9 +534,9 @@ function CompleteApplicationReview() {
                   </div>
                   <div>
                     <Label className="text-sm text-muted-foreground">
-                      Nationality
+                      Timezone
                     </Label>
-                    <p>Spanish</p>
+                    <p>GMT+1 (Central European Time)</p>
                   </div>
                   <div>
                     <Label className="text-sm text-muted-foreground">
@@ -508,11 +551,13 @@ function CompleteApplicationReview() {
                     Personal Statement
                   </Label>
                   <p className="mt-1 text-sm">
-                    As a data analyst with 4 years of experience in fintech, I'm
-                    passionate about leveraging AI to solve complex financial
-                    problems. I'm seeking to advance my expertise through your
-                    esteemed Data Science program to create solutions that can
-                    make financial services more accessible globally.
+                    As a frontend developer with 4 years of experience, I'm
+                    passionate about web3 technologies and blockchain
+                    development. I've been exploring Solidity and smart contract
+                    development in my free time and I'm seeking to advance my
+                    expertise through your Turbin3 web3 developer program to
+                    create decentralized applications that can democratize
+                    financial access globally.
                   </p>
                 </div>
               </TabsContent>
@@ -523,30 +568,29 @@ function CompleteApplicationReview() {
                     <div>
                       <p className="font-medium">University of Barcelona</p>
                       <p className="text-sm text-muted-foreground">
-                        Bachelor of Science in Mathematics
+                        Bachelor of Science in Computer Science
                       </p>
                     </div>
                     <p className="text-sm text-muted-foreground">2015 - 2019</p>
                   </div>
                   <p className="text-sm">GPA: 3.85/4.0</p>
                   <p className="text-sm">
-                    Thesis: "Applications of Machine Learning in Financial Risk
-                    Analysis"
+                    Thesis: "Distributed Systems and Peer-to-Peer Networks"
                   </p>
                 </div>
 
                 <div className="border rounded-md p-4 space-y-3">
                   <div className="flex justify-between">
                     <div>
-                      <p className="font-medium">Data Science Academy</p>
+                      <p className="font-medium">Blockchain Academy</p>
                       <p className="text-sm text-muted-foreground">
-                        Professional Certificate in Data Analysis
+                        Professional Certificate in Blockchain Development
                       </p>
                     </div>
                     <p className="text-sm text-muted-foreground">2020</p>
                   </div>
                   <p className="text-sm">
-                    Specialization in financial data analysis and visualization
+                    Specialization in Solidity and smart contract development
                   </p>
                 </div>
               </TabsContent>
@@ -555,9 +599,9 @@ function CompleteApplicationReview() {
                 <div className="border rounded-md p-4 space-y-3">
                   <div className="flex justify-between">
                     <div>
-                      <p className="font-medium">FinTech Solutions</p>
+                      <p className="font-medium">DeFi Solutions</p>
                       <p className="text-sm text-muted-foreground">
-                        Senior Data Analyst
+                        Senior Frontend Developer
                       </p>
                     </div>
                     <p className="text-sm text-muted-foreground">
@@ -565,28 +609,28 @@ function CompleteApplicationReview() {
                     </p>
                   </div>
                   <p className="text-sm">
-                    Led a team of 3 analysts in developing predictive models for
-                    credit risk assessment. Implemented machine learning
-                    algorithms that improved decision accuracy by 24%. Created
-                    interactive dashboards using Tableau for the executive team.
+                    Developed React-based dApp interfaces for decentralized
+                    finance protocols. Implemented Web3.js integration with
+                    multiple wallets. Created interactive dashboards for
+                    protocol analytics and governance features.
                   </p>
                 </div>
 
                 <div className="border rounded-md p-4 space-y-3">
                   <div className="flex justify-between">
                     <div>
-                      <p className="font-medium">Global Banking Corp</p>
+                      <p className="font-medium">Web Design Studio</p>
                       <p className="text-sm text-muted-foreground">
-                        Data Analyst
+                        Frontend Developer
                       </p>
                     </div>
                     <p className="text-sm text-muted-foreground">2019 - 2021</p>
                   </div>
                   <p className="text-sm">
-                    Analyzed transaction data to identify patterns and
-                    anomalies. Developed automated reports using Python and SQL
-                    that saved 15 hours of manual work weekly. Collaborated with
-                    the fraud detection team to enhance security measures.
+                    Built responsive web applications using React and Next.js.
+                    Integrated payment systems and third-party APIs. Improved
+                    site performance through optimized rendering and caching
+                    strategies.
                   </p>
                 </div>
               </TabsContent>
@@ -611,9 +655,10 @@ function CompleteApplicationReview() {
                 <p className="text-xs text-muted-foreground">Apr 14, 2025</p>
               </div>
               <p className="text-sm">
-                Strong academic background with relevant industry experience.
-                Her personal statement shows clear motivation and alignment with
-                our program goals. Recommend approval for the Fall 2025 cohort.
+                Strong frontend skills with some web3 exposure. Her personal
+                statement shows clear motivation to transition into blockchain
+                development. Recommend approval for the Fall 2025 cohort where
+                we'll be focusing more on frontend integration with web3.
               </p>
             </div>
 
@@ -629,10 +674,11 @@ function CompleteApplicationReview() {
                 <p className="text-xs text-muted-foreground">Apr 13, 2025</p>
               </div>
               <p className="text-sm">
-                Interviewed Sofia yesterday. Excellent communication skills and
-                technical knowledge. She'd be a great fit for the program. She
-                mentioned interest in financial AI research - could be a good
-                match with Prof. Chen's lab.
+                Interviewed Sofia yesterday. Good understanding of React and
+                frontend principles. Her Solidity knowledge is basic but she's
+                eager to learn. She'd be a good fit for the program. She
+                mentioned interest in NFT projects - could be a good match for
+                the creative track.
               </p>
             </div>
 
@@ -805,28 +851,9 @@ function CompleteApplicationReview() {
 
               <div className="pt-4">
                 <ResponseTemplateSelector
-                  templates={[
-                    {
-                      id: "t1",
-                      name: "Acceptance",
-                      subject: "Good news regarding your application",
-                    },
-                    {
-                      id: "t2",
-                      name: "Deferral",
-                      subject: "An update on your application",
-                    },
-                    {
-                      id: "t3",
-                      name: "Rejection",
-                      subject: "Regarding your recent application",
-                    },
-                    {
-                      id: "t4",
-                      name: "Additional Information",
-                      subject: "We need more information",
-                    },
-                  ]}
+                  templates={responseTemplates}
+                  selectedTemplateId={selectedTemplate}
+                  onTemplateSelect={setSelectedTemplate}
                 />
               </div>
             </div>
@@ -1272,40 +1299,81 @@ function ReviewerNotes() {
 
 function ResponseTemplateSelector({
   templates,
+  selectedTemplateId,
+  onTemplateSelect,
 }: {
   templates: { id: string; name: string; subject: string }[];
+  selectedTemplateId: string | null;
+  onTemplateSelect: (templateId: string) => void;
 }) {
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
   const [emailSubject, setEmailSubject] = useState<string>("");
   const [emailContent, setEmailContent] =
     useState<string>(`Dear [Applicant Name],
 
-Thank you for your interest in our program. We are pleased to provide you with an update on your application.
+Thank you for your interest in the Turbin3 Web3 Developer Program. We are pleased to provide you with an update on your application.
 
 [Template Message Content]
 
 Regards,
-Admissions Team`);
+Turbin3 Admissions Team`);
 
   // Update email subject when template changes
   useEffect(() => {
-    if (selectedTemplate) {
-      const template = templates.find((t) => t.id === selectedTemplate);
+    if (selectedTemplateId) {
+      const template = templates.find((t) => t.id === selectedTemplateId);
       if (template) {
         setEmailSubject(template.subject);
+
+        // Also update the email content based on template
+        if (template.id === "t1") {
+          // Acceptance
+          setEmailContent(`Dear [Applicant Name],
+
+Congratulations! We are thrilled to inform you that your application to the Turbin3 Web3 Developer Program has been accepted. Your experience and passion for blockchain technology stood out to our review committee.
+
+Next steps:
+1. Complete your enrollment by [Date]
+2. Join our Discord community
+3. Prepare for orientation on [Date]
+
+We're excited to have you join our community of web3 builders!
+
+Regards,
+Turbin3 Admissions Team`);
+        } else if (template.id === "t2") {
+          // Deferral
+          setEmailContent(`Dear [Applicant Name],
+
+Thank you for your application to the Turbin3 Web3 Developer Program. After careful review, we would like to defer your application to our next cohort.
+
+We believe you have potential but would recommend gaining more experience with [Specific Technology] before joining. We encourage you to apply again for our next cohort starting [Date].
+
+Regards,
+Turbin3 Admissions Team`);
+        } else if (template.id === "t3") {
+          // Rejection
+          setEmailContent(`Dear [Applicant Name],
+
+Thank you for your interest in the Turbin3 Web3 Developer Program. After careful consideration of your application, we regret to inform you that we are unable to offer you a place in our current program.
+
+We encourage you to continue developing your skills and consider applying again in the future.
+
+Regards,
+Turbin3 Admissions Team`);
+        }
       }
     } else {
       setEmailSubject("");
     }
-  }, [selectedTemplate, templates]);
+  }, [selectedTemplateId, templates]);
 
   return (
     <div className="space-y-3">
       <div>
         <Label>Response to Applicant</Label>
         <Select
-          value={selectedTemplate || ""}
-          onValueChange={setSelectedTemplate}
+          value={selectedTemplateId || ""}
+          onValueChange={onTemplateSelect}
         >
           <SelectTrigger className="mt-1">
             <SelectValue placeholder="Select response template" />
@@ -1320,7 +1388,7 @@ Admissions Team`);
         </Select>
       </div>
 
-      {selectedTemplate && (
+      {selectedTemplateId && (
         <div className="space-y-3 border rounded-md p-4 mt-2">
           <div>
             <Label className="text-sm">Email Subject</Label>

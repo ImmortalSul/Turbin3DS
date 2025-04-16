@@ -81,18 +81,18 @@ export default function ComponentsLayout({
               name: "Review",
               href: "/components/verticals/application/review",
             },
-            {
-              name: "Forms",
-              href: "/components/verticals/application/forms",
-            },
-            {
-              name: "Status Indicators",
-              href: "/components/verticals/application/status",
-            },
-            {
-              name: "Document Upload",
-              href: "/components/verticals/application/documents",
-            },
+            // {
+            //   name: "Forms",
+            //   href: "/components/verticals/application/forms",
+            // },
+            // {
+            //   name: "Status Indicators",
+            //   href: "/components/verticals/application/status",
+            // },
+            // {
+            //   name: "Document Upload",
+            //   href: "/components/verticals/application/documents",
+            // },
           ],
         },
         {
